@@ -20,10 +20,9 @@ async function worker() {
             const dots = content.split(".").length - 1;
             const timeToProcess = dots * 1000;
 
-            // Simulate work
             setTimeout(() => {
                 console.log(`Done processing: ${content}`);
-                channel.ack(msg); // Acknowledge the message
+                channel.ack(msg);
             }, timeToProcess);
         }
     }, { noAck: false });
