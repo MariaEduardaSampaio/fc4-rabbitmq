@@ -16,7 +16,7 @@ async function sendOrderEvents() {
     const ordersEvent: OrderEvent[] = [
         { id: "1", customer: "Alice", event: "order.created" },
         { id: "2", customer: "Bob", event: "order.updated" },
-        { id: "3", customer: "Charlie", event: "order.deleted" }
+        { id: "3", customer: "Charlie", event: "order.created" }
     ];
 
     for (let i = 0; i < ordersEvent.length; i++) {
@@ -24,7 +24,9 @@ async function sendOrderEvents() {
         const message = JSON.stringify(order);
         const routingKey = order.event;
 
-        channel.publish(exchange, routingKey, Buffer.from(message));
+        channel.publish(exchange, routingKey, Buffer.from(message), {
+            persistent: true
+        });
     }
 
     setTimeout(() => {
